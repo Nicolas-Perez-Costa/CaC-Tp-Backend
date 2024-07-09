@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clases de Apoyo</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <link rel="icon" type="image/ico" href="Templates/anti-recursada.ico">
+  <script src="https://kit.fontawesome.com/21016c86a5.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <header>
+    <h1>Clases de Apoyo</h1>
+    <nav>
+      <ul>
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#nosotros">Nosotros</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section id="inicio">
+    <h2 id="inicio-titulo">{{ data['inicio']['titulo'] }}</h2>
+    <p id="inicio-descripcion">{{ data['inicio']['descripcion'] }}</p>
+  </section>
+  
+  <section id="servicios">
+    <h2>Nuestros Servicios</h2>
+    <div class="servicios-grid" id="servicios-grid">
+      {% for servicio in data['servicios'] %}
+      <div class="servicio">
+        <h3>{{ servicio['nombre'] }}</h3>
+        <p>{{ servicio['descripcion'] }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+  
+  <section id="nosotros">
+    <h2 id="nosotros-titulo">{{ data['nosotros']['titulo'] }}</h2>
+    <p id="nosotros-descripcion">{{ data['nosotros']['descripcion'] }}</p>
+  </section>
+
+  <section id="contacto">
+    <h2>Contacto</h2>
+    <form id="contactForm" action="{{ url_for('index') }}" method="POST">
+      {{ form.hidden_tag() }}
+      <label for="nombre">Nombre:</label>
+      {{ form.nombre(size=32) }}
+      {% for error in form.nombre.errors %}
+      <span class="error">[{{ error }}]</span>
+      {% endfor %}
+
+      <label for="email">Email:</label>
+      {{ form.email(size=32) }}
+      {% for error in form.email.errors %}
+      <span class="error">[{{ error }}]</span>
+      {% endfor %}
+
+      <label for="telefono">Teléfono:</label>
+      {{ form.telefono(size=32) }}
+      {% for error in form.telefono.errors %}
+      <span class="error">[{{ error }}]</span>
+      {% endfor %}
+
+      <label for="materia">Materia de interés:</label>
+      {{ form.materia_interes(size=32) }}
+      {% for error in form.materia_interes.errors %}
+      <span class="error">[{{ error }}]</span>
+      {% endfor %}
+
+      <label>Nivel educativo:</label>
+      {{ form.primaria }} {{ form.primaria.label }}<br>
+      {{ form.secundaria }} {{ form.secundaria.label }}<br>
+      {{ form.terciario }} {{ form.terciario.label }}<br>
+      {{ form.universidad }} {{ form.universidad.label }}<br>
+
+      <label for="mensaje">Mensaje:</label>
+      {{ form.mensaje(rows=4) }}
+      {% for error in form.mensaje.errors %}
+      <span class="error">[{{ error }}]</span>
+      {% endfor %}
+
+      <input type="submit" value="Enviar">
+    </form>
+  </section>
+
+  <footer>
+    <p>&copy; 2024 Clases de Apoyo - Todos los derechos reservados</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
