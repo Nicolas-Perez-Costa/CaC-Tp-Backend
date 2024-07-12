@@ -5,9 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Clases de Apoyo</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-  <link rel="icon" type="image/ico" href="Templates/anti-recursada.ico">
-  <script src="https://kit.fontawesome.com/21016c86a5.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <link rel="icon" type="image/ico" href="favicon.ico">
 </head>
 
 <body>
@@ -19,74 +18,76 @@
         <li><a href="#servicios">Servicios</a></li>
         <li><a href="#nosotros">Nosotros</a></li>
         <li><a href="#contacto">Contacto</a></li>
+        <li><a href="{{ url_for('admin') }}">Admin</a></li>
       </ul>
     </nav>
   </header>
 
   <section id="inicio">
-    <h2 id="inicio-titulo">{{ data['inicio']['titulo'] }}</h2>
-    <p id="inicio-descripcion">{{ data['inicio']['descripcion'] }}</p>
+    <h2 id="inicio-titulo">Bienvenidos a Clases de Apoyo</h2>
+    <p id="inicio-descripcion">Ofrecemos las mejores clases de apoyo para todas las materias y niveles educativos.</p>
   </section>
-  
+
   <section id="servicios">
     <h2>Nuestros Servicios</h2>
     <div class="servicios-grid" id="servicios-grid">
-      {% for servicio in data['servicios'] %}
       <div class="servicio">
-        <h3>{{ servicio['nombre'] }}</h3>
-        <p>{{ servicio['descripcion'] }}</p>
+        <h3>Matemáticas</h3>
+        <p>Clases de matemáticas para todos los niveles.</p>
       </div>
-      {% endfor %}
+      <div class="servicio">
+        <h3>Ciencias</h3>
+        <p>Clases de ciencias con un enfoque práctico.</p>
+      </div>
+      <div class="servicio">
+        <h3>Inglés</h3>
+        <p>Clases de inglés para mejorar tus habilidades lingüísticas.</p>
+      </div>
+      <div class="servicio">
+        <h3>Historia</h3>
+        <p>Clases de historia para comprender mejor nuestro pasado.</p>
+      </div>
     </div>
   </section>
-  
+
   <section id="nosotros">
-    <h2 id="nosotros-titulo">{{ data['nosotros']['titulo'] }}</h2>
-    <p id="nosotros-descripcion">{{ data['nosotros']['descripcion'] }}</p>
+    <h2 id="nosotros-titulo">Sobre Nosotros</h2>
+    <p id="nosotros-descripcion">Somos un grupo de profesionales dedicados a la educación con años de experiencia.</p>
   </section>
 
   <section id="contacto">
     <h2>Contacto</h2>
-    <form id="contactForm" action="{{ url_for('index') }}" method="POST">
-      {{ form.hidden_tag() }}
+    <form method="post" action="{{ url_for('home') }}">
       <label for="nombre">Nombre:</label>
-      {{ form.nombre(size=32) }}
-      {% for error in form.nombre.errors %}
-      <span class="error">[{{ error }}]</span>
-      {% endfor %}
+      <input type="text" id="nombre" name="nombre" required><br><br>
 
       <label for="email">Email:</label>
-      {{ form.email(size=32) }}
-      {% for error in form.email.errors %}
-      <span class="error">[{{ error }}]</span>
-      {% endfor %}
+      <input type="email" id="email" name="email" required><br><br>
 
       <label for="telefono">Teléfono:</label>
-      {{ form.telefono(size=32) }}
-      {% for error in form.telefono.errors %}
-      <span class="error">[{{ error }}]</span>
-      {% endfor %}
+      <input type="tel" id="telefono" name="telefono" required><br><br>
 
-      <label for="materia">Materia de interés:</label>
-      {{ form.materia_interes(size=32) }}
-      {% for error in form.materia_interes.errors %}
-      <span class="error">[{{ error }}]</span>
-      {% endfor %}
+      <label for="materia_interes">Materia de Interés:</label>
+      <input type="text" id="materia_interes" name="materia_interes" required><br><br>
 
-      <label>Nivel educativo:</label>
-      {{ form.primaria }} {{ form.primaria.label }}<br>
-      {{ form.secundaria }} {{ form.secundaria.label }}<br>
-      {{ form.terciario }} {{ form.terciario.label }}<br>
-      {{ form.universidad }} {{ form.universidad.label }}<br>
+      <label>Nivel de Estudio:</label><br>
+      <input type="checkbox" id="primaria" name="primaria">
+      <label for="primaria">Primaria</label><br>
 
-      <label for="mensaje">Mensaje:</label>
-      {{ form.mensaje(rows=4) }}
-      {% for error in form.mensaje.errors %}
-      <span class="error">[{{ error }}]</span>
-      {% endfor %}
+      <input type="checkbox" id="secundaria" name="secundaria">
+      <label for="secundaria">Secundaria</label><br>
+
+      <input type="checkbox" id="terciario" name="terciario">
+      <label for="terciario">Terciario</label><br>
+
+      <input type="checkbox" id="universidad" name="universidad">
+      <label for="universidad">Universidad</label><br><br>
+
+      <label for="mensaje">Mensaje:</label><br>
+      <textarea id="mensaje" name="mensaje" rows="4" cols="50"></textarea><br><br>
 
       <input type="submit" value="Enviar">
-    </form>
+  </form>
   </section>
 
   <footer>

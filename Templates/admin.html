@@ -1,71 +1,70 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Lista de Contactos</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    <link rel="icon" type="image/ico" href="favicon.ico">
+    <title>Administración de Formulario</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
-
 <body>
-    <header>
-        <h1>Admin - Lista de Contactos</h1>
-        <nav>
-            <ul>
-                <li><a href="/">Inicio</a></li>
-                <li><a href="/admin">Admin</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <section id="lista-contactos">
-        <h2>Listado de Contactos</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Email</th>
-                    <th>Teléfono</th>
-                    <th>Materia de Interés</th>
-                    <th>Fecha Solicitud</th>
-                    <th>Fecha Contacto Cliente</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for contacto in contactos %}
-                <tr>
-                    <td>{{ contacto.id }}</td>
-                    <td>{{ contacto.nombre }}</td>
-                    <td>{{ contacto.email }}</td>
-                    <td>{{ contacto.telefono }}</td>
-                    <td>{{ contacto.materia_interes }}</td>
-                    <td>{{ contacto.fecha_solicitud_contacto.strftime('%d-%m-%Y') }}</td>
-                    <td>
-                        {% if contacto.fecha_contacto_cliente %}
-                            {{ contacto.fecha_contacto_cliente.strftime('%d-%m-%Y') }}
-                        {% else %}
-                            Pendiente
-                        {% endif %}
-                    </td>
-                    <td>
-                        <a href="{{ url_for('editar_contacto', contacto_id=contacto.id) }}">Editar</a> |
-                        <a href="{{ url_for('eliminar_contacto', contacto_id=contacto.id) }}" onclick="return confirm('¿Estás seguro de querer eliminar este contacto?')">Eliminar</a>                        
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </section>
-
-    <footer>
-        <p>&copy; 2024 Clases de Apoyo - Todos los derechos reservados</p>
-    </footer>
-
-    <script src="script.js"></script>
+    <h1>Administración de Formulario</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Teléfono</th>
+                <th>Materia de Interés</th>
+                <th>Primaria</th>
+                <th>Secundaria</th>
+                <th>Terciario</th>
+                <th>Universidad</th>
+                <th>Mensaje</th>
+                <th>Fecha de Contacto Cliente</th>
+                <th>Fecha de Solicitud</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in data %}
+            <tr>
+                <td>{{ row[0] }}</td>
+                <td>{{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+                <td>{{ row[3] }}</td>
+                <td>{{ row[4] }}</td>
+                <td>{{ "Sí" if row[5] else "No" }}</td>
+                <td>{{ "Sí" if row[6] else "No" }}</td>
+                <td>{{ "Sí" if row[7] else "No" }}</td>
+                <td>{{ "Sí" if row[8] else "No" }}</td>
+                <td>{{ row[9] }}</td>
+                <td>{{ row[10] }}</td>
+                <td>{{ row[11] }}</td>
+                <td>
+                    <form action="{{ url_for('contactar', id=row[0]) }}" method="post" style="display: inline;">
+                        <button type="submit">Contactar</button>
+                    </form>
+                    <form action="{{ url_for('eliminar', id=row[0]) }}" method="post" style="display: inline;">
+                        <button type="submit">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </body>
-
 </html>
